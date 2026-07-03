@@ -1,0 +1,32 @@
+# Flutter / Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Secrets — never commit real keys or native Firebase config
+.env
+google-services.json
+GoogleService-Info.plist
+
+# NOTE: lib/firebase_options.dart is committed as a placeholder template.
+#       `flutterfire configure` overwrites it locally with real (non-secret)
+#       Firebase identifiers. If you prefer to keep even those out of the repo,
+#       uncomment the next line:
+# lib/firebase_options.dart
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Codegen output is regenerated via build_runner; keep it out of VCS
+*.g.dart
+*.freezed.dart
+
+# pubspec.lock IS committed for apps (kept, not ignored)

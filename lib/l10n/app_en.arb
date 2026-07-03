@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "appTitle": "Grade AI",
+  "homeTagline": "Scan exams, grade them against your rubric in seconds.",
+  "scanPaper": "Scan exam paper",
+  "manageAnswerKeys": "Answer keys & rubrics"
+}

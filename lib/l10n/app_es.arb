@@ -1,0 +1,7 @@
+{
+  "@@locale": "es",
+  "appTitle": "Grade AI",
+  "homeTagline": "Escanea exámenes y califícalos según tu rúbrica en segundos.",
+  "scanPaper": "Escanear examen",
+  "manageAnswerKeys": "Claves de respuestas y rúbricas"
+}
