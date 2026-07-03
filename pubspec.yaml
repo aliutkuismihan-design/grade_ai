@@ -44,6 +44,12 @@ dependencies:
   # Monetization — Google AdMob
   google_mobile_ads: ^5.1.0
 
+  # Security
+  local_auth: ^2.3.0
+  flutter_secure_storage: ^9.2.2
+  screen_protector: ^1.4.2
+  jailbreak_root_detection: ^0.0.7
+
   # Models / immutability
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0

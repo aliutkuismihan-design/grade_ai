@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grade_ai/src/core/config/locale_controller.dart';
 import 'package:grade_ai/src/features/ads/application/ads_providers.dart';
 
@@ -64,6 +65,19 @@ class SettingsSection extends ConsumerWidget {
               icon: const Icon(Icons.play_circle_outline),
               label: const Text('Watch ad'),
             ),
+          ),
+        ),
+        const SizedBox(height: 16),
+
+        Text('Security', style: text.titleMedium),
+        const SizedBox(height: 8),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.security_outlined),
+            title: const Text('Security Settings'),
+            subtitle: const Text('App lock, biometric, data protection'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/security'),
           ),
         ),
         const SizedBox(height: 16),

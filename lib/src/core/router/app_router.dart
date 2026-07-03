@@ -5,6 +5,7 @@ import 'package:grade_ai/src/features/grading/presentation/screens/upload_grade_
 import 'package:grade_ai/src/features/grading/presentation/screens/grade_result_screen.dart';
 import 'package:grade_ai/src/features/scan/presentation/screens/scan_screen.dart';
 import 'package:grade_ai/src/features/scan/presentation/widgets/capture_preview.dart';
+import 'package:grade_ai/src/features/security/presentation/screens/security_settings_screen.dart';
 
 /// App navigation with full scan → grade → results flow.
 final appRouter = GoRouter(
@@ -39,6 +40,11 @@ final appRouter = GoRouter(
       path: '/results',
       name: 'results',
       builder: (context, state) => const GradeResultScreen(),
+    ),
+    GoRoute(
+      path: '/security',
+      name: 'security',
+      builder: (context, state) => const SecuritySettingsScreen(),
     ),
   ],
 );
