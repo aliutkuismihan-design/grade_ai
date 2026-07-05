@@ -9,7 +9,7 @@ import 'package:grade_ai/src/features/ads/application/ads_service.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Load .env (Higgs Field AI URL/key, AdMob IDs, mock flag).
+  // Load .env (Grande AI URL/key, AdMob IDs, mock flag).
   await Env.load();
 
   // Initialise Firebase (Auth, Firestore, Storage).

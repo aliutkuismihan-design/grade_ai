@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grade_ai/src/core/theme/app_theme.dart';
 import 'package:grade_ai/src/features/grading/domain/entities/grading_result.dart';
-import 'package:grade_ai/src/features/grading/presentation/screens/upload_grade_screen.dart';
+import 'package:go_router/go_router.dart';
 
 /// Displays the AI grading result with per-question breakdown.
 class GradeResultScreen extends ConsumerStatefulWidget {
@@ -39,7 +39,7 @@ class _GradeResultScreenState extends ConsumerState<GradeResultScreen>
 
   @override
   Widget build(BuildContext context) {
-    final result = ref.watch(_gradingStateProvider).valueOrNull;
+    final result = ref.watch(gradingStateProvider).valueOrNull;
     if (result == null) {
       return const Scaffold(
         body: Center(child: Text('No grading result yet')),

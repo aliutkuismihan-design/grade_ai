@@ -1,5 +1,5 @@
 name: grade_ai
-description: "AI exam grading assistant for teachers — scan handwritten papers, upload answer keys, and grade against curriculum rubrics via the Higgs Field AI backend."
+description: "AI exam grading assistant for teachers — scan handwritten papers, upload answer keys, and grade against curriculum rubrics via the Grande AI backend."
 publish_to: "none"
 version: 0.1.0+1
 
@@ -20,11 +20,18 @@ dependencies:
   # Navigation
   go_router: ^14.2.0
 
-  # Networking → Higgs Field AI REST backend
+  # Networking → Grande AI REST backend
   dio: ^5.5.0
 
   # Config / secrets
   flutter_dotenv: ^5.1.0
+
+  # Update checker
+  package_info_plus: ^8.0.0
+  url_launcher: ^6.3.0
+
+  # Auth
+  google_sign_in: ^6.2.1
 
   # Offline queue support
   connectivity_plus: ^6.0.5

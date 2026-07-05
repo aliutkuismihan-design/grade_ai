@@ -7,11 +7,12 @@ import 'package:grade_ai/src/features/grading/domain/entities/answer_key.dart';
 import 'package:grade_ai/src/features/grading/domain/entities/exam_paper.dart';
 import 'package:grade_ai/src/features/grading/domain/entities/rubric.dart';
 import 'package:grade_ai/src/features/grading/domain/services/grading_service.dart';
+import 'package:grade_ai/src/features/grading/application/providers.dart';
 import 'package:grade_ai/src/features/grading/presentation/widgets/grading_progress.dart';
 import 'package:grade_ai/src/features/grading/presentation/widgets/rubric_editor.dart';
 import 'package:grade_ai/src/features/scan/application/scan_providers.dart';
 
-final _gradingStateProvider = StateProvider<AsyncValue<GradingResult?>>((ref) => const AsyncValue.data(null));
+final gradingStateProvider = StateProvider<AsyncValue<GradingResult?>>((ref) => const AsyncValue.data(null));
 
 final _answerKeyProvider = StateProvider<AnswerKey>((ref) => AnswerKey(
   id: 'temp-key',
@@ -52,62 +53,54 @@ class UploadGradeScreen extends ConsumerWidget {
     final image = ref.read(capturedImageProvider);
     if (image == null) return;
 
-    ref.read(_gradingStateProvider.notifier).state = const AsyncValue.loading();
+    ref.read(gradingStateProvider.notifier).state = const AsyncValue.loading();
 
-    // Simulate delay for demo
-    await Future.delayed(const Duration(seconds: 3));
-
-    final result = GradingResult(
-      paperId: 'paper-${DateTime.now().millisecondsSinceEpoch}',
-      totalScore: 85,
-      maxScore: 100,
-      questionResults: [
-        QuestionResult(
-          questionNumber: '1',
-          transcribedAnswer: 'Student wrote the correct formula.',
-          awardedPoints: 30,
-          maxPoints: 30,
-          feedback: 'Perfect — correct formula and substitution.',
-          confidence: 0.95,
-        ),
-        QuestionResult(
-          questionNumber: '2',
-          transcribedAnswer: 'Minor arithmetic error in step 3.',
-          awardedPoints: 38,
-          maxPoints: 40,
-          feedback: 'Correct method, small calculation slip (-2).',
-          confidence: 0.91,
-        ),
-        QuestionResult(
-          questionNumber: '3',
-          transcribedAnswer: 'Missed edge case.',
-          awardedPoints: 17,
-          maxPoints: 30,
-          feedback: 'Good start but missing the boundary condition (-13).',
-          confidence: 0.78,
-        ),
-      ],
-      overallFeedback: 'Strong performance on Q1 and Q2. Review boundary conditions for Q3.',
-      gradedPdfUrl: null,
-      ocrRawText: null,
+    final paper = ExamPaper(
+      id: 'paper-${DateTime.now().millisecondsSinceEpoch}',
+      studentName: 'Student',
+      imagePaths: [image.path],
+      uploadedAt: DateTime.now(),
     );
 
-    ref.read(_gradingStateProvider.notifier).state = AsyncValue.data(result);
+    final answerKey = ref.read(_answerKeyProvider);
+    final rubric = ref.read(_rubricProvider);
+    final language = ref.read(_languageProvider);
 
-    if (context.mounted) {
-      context.push('/results');
-    }
+    final service = ref.read(gradingServiceProvider);
+    final result = await service.gradePaper(
+      paper: paper,
+      answerKey: answerKey,
+      rubric: rubric,
+      language: language,
+    );
+
+    result.when(
+      (gradingResult) {
+        ref.read(gradingStateProvider.notifier).state = AsyncValue.data(gradingResult);
+        if (context.mounted) {
+          context.push('/results');
+        }
+      },
+      (failure) {
+        ref.read(gradingStateProvider.notifier).state = AsyncValue.error(failure.message, StackTrace.current);
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Grading failed: ${failure.message}')),
+          );
+        }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final image = ref.watch(capturedImageProvider);
-    final gradingState = ref.watch(_gradingStateProvider);
+    final gradingState = ref.watch(gradingStateProvider);
     final isLoading = gradingState.isLoading;
 
     if (isLoading) {
       return const Scaffold(
-        body: GradingProgress(message: 'Higgs Field AI is grading...'),
+        body: GradingProgress(message: 'Grande AI is grading...'),
       );
     }
 

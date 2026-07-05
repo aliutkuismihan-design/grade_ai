@@ -11,22 +11,22 @@ import 'package:grade_ai/src/features/grading/domain/entities/grading_result.dar
 import 'package:grade_ai/src/features/grading/domain/entities/rubric.dart';
 import 'package:grade_ai/src/features/grading/domain/services/grading_service.dart';
 
-/// [GradingService] backed by the **Higgs Field AI** REST backend running on the
+/// [GradingService] backed by the **Grande AI** REST backend running on the
 /// user's private server.
 ///
-/// Endpoints (base URL from `HIGGS_BASE_URL`):
+/// Endpoints (base URL from `GRANDE_AI_BASE_URL`):
 ///   • `POST /grade`            — multipart: paper_image, model_answer, rubric_json,
 ///                                language, curriculum_tags → per-question scores.
 ///   • `POST /rubric/generate`  — generate a rubric from a model answer.
 ///
-/// Auth: `Authorization: Bearer <HIGGS_API_KEY>` (set on the shared Dio client).
+/// Auth: `Authorization: Bearer <GRANDE_AI_API_KEY>` (set on the shared Dio client).
 /// Retry/backoff is handled by the Dio [RetryInterceptor]; when the device is
 /// offline the request is parked in [OfflineGradingQueue] and retried later.
 ///
 /// While `USE_MOCK_GRADING=true` this returns canned JSON so the app runs before
 /// the backend is deployed.
-class HiggsFieldGradingService implements GradingService {
-  HiggsFieldGradingService(this._dio, this._queue);
+class GrandeAIGradingService implements GradingService {
+  GrandeAIGradingService(this._dio, this._queue);
 
   final Dio _dio;
   final OfflineGradingQueue _queue;
@@ -196,7 +196,7 @@ class HiggsFieldGradingService implements GradingService {
       maxScore: results.fold(0, (s, q) => s + q.maxPoints),
       questionResults: results,
       overallFeedback:
-          'Mock grade for ${paper.studentName}. Set USE_MOCK_GRADING=false once the Higgs Field AI server is live.',
+          'Mock grade for ${paper.studentName}. Set USE_MOCK_GRADING=false once the Grande AI server is live.',
       gradedPdfUrl: null,
       ocrRawText: '[mock OCR raw text]',
     );

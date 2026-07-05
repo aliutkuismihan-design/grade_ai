@@ -44,8 +44,8 @@ class _ExamCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final (bg, fg) = switch (exam.status) {
       ExamStatus.draft => (scheme.surfaceContainerHighest, scheme.onSurfaceVariant),
-      ExamStatus.active => (scheme.secondary.withValues(alpha: 0.2), scheme.secondary),
-      ExamStatus.graded => (scheme.primary.withValues(alpha: 0.2), scheme.primary),
+      ExamStatus.active => (scheme.secondary.withOpacity(0.2), scheme.secondary),
+      ExamStatus.graded => (scheme.primary.withOpacity(0.2), scheme.primary),
     };
 
     return Card(

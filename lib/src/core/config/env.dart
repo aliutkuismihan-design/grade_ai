@@ -6,16 +6,16 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 abstract final class Env {
   static Future<void> load() => dotenv.load(fileName: '.env');
 
-  // --- Higgs Field AI backend ---------------------------------------------
+  // --- Grande AI backend ---------------------------------------------
 
-  /// Base URL of the Higgs Field AI grading backend (your private server).
-  static String get higgsBaseUrl => dotenv.get(
-        'HIGGS_BASE_URL',
-        fallback: 'https://higgs-field.yourdomain.com/v1',
+  /// Base URL of the Grande AI grading backend (your private server).
+  static String get grandeAiBaseUrl => dotenv.get(
+        'GRANDE_AI_BASE_URL',
+        fallback: 'https://grande-ai.yourdomain.com/v1',
       );
 
-  /// Bearer token for the Higgs Field AI backend.
-  static String get higgsApiKey => dotenv.get('HIGGS_API_KEY', fallback: '');
+  /// Bearer token for the Grande AI backend.
+  static String get grandeAiApiKey => dotenv.get('GRANDE_AI_API_KEY', fallback: '');
 
   /// When true, the grading service returns canned JSON instead of hitting the
   /// backend (the real server may not be deployed yet).

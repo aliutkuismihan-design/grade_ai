@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grade_ai/l10n/app_localizations.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -23,13 +24,13 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 24),
             FilledButton.icon(
-              onPressed: () {}, // TODO: navigate to /scan
+              onPressed: () => context.push('/scan'),
               icon: const Icon(Icons.document_scanner_outlined),
               label: Text(l10n.scanPaper),
             ),
             const SizedBox(height: 12),
             OutlinedButton.icon(
-              onPressed: () {}, // TODO: navigate to /answer-keys
+              onPressed: () => context.push('/upload'),
               icon: const Icon(Icons.key_outlined),
               label: Text(l10n.manageAnswerKeys),
             ),

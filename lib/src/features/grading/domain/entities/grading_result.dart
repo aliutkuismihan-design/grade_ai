@@ -1,4 +1,4 @@
-/// The outcome of grading one [ExamPaper] via the Higgs Field AI backend.
+/// The outcome of grading one [ExamPaper] via the Grande AI backend.
 class GradingResult {
   const GradingResult({
     required this.paperId,

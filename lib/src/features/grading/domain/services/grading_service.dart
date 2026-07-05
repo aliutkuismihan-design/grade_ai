@@ -15,7 +15,7 @@ enum GradingLanguage {
 }
 
 /// Pluggable grading engine. The concrete implementation
-/// (`HiggsFieldGradingService`) calls the Higgs Field AI REST backend, but any
+/// (`GrandeAIGradingService`) calls the Grande AI REST backend, but any
 /// backend satisfying this contract can be swapped in via Riverpod.
 abstract interface class GradingService {
   /// Grades [paper] against [answerKey] and [rubric] in [language].
