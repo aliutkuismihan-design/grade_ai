@@ -43,7 +43,7 @@ abstract final class AppTheme {
           ),
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         color: colorScheme.surfaceContainerHighest,
         shape: RoundedRectangleBorder(

@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grade_ai/src/core/theme/app_theme.dart';
 import 'package:grade_ai/src/features/grading/domain/entities/grading_result.dart';
-import 'package:go_router/go_router.dart';
+import 'package:grade_ai/src/features/grading/presentation/screens/upload_grade_screen.dart';
+import 'package:grade_ai/src/features/scan/application/scan_providers.dart';
 
 /// Displays the AI grading result with per-question breakdown.
 class GradeResultScreen extends ConsumerStatefulWidget {
@@ -106,7 +107,7 @@ class _GradeResultScreenState extends ConsumerState<GradeResultScreen>
               child: FilledButton.icon(
                 onPressed: () {
                   ref.read(capturedImageProvider.notifier).state = null;
-                  ref.read(_gradingStateProvider.notifier).state = const AsyncValue.data(null);
+                  ref.read(gradingStateProvider.notifier).state = const AsyncValue.data(null);
                   context.push('/scan');
                 },
                 icon: const Icon(Icons.add),
@@ -158,7 +159,7 @@ class _GradeResultScreenState extends ConsumerState<GradeResultScreen>
                     animatedScore.toStringAsFixed(0),
                     style: const TextStyle(
                       fontSize: 64,
-                      fontWeight: FontWeight.black,
+                      fontWeight: FontWeight.w900,
                       color: Colors.white,
                     ),
                   ),
@@ -206,7 +207,7 @@ class _GradeResultScreenState extends ConsumerState<GradeResultScreen>
   }
 
   Widget _questionCard(QuestionResult q) {
-    final pct = q.maxPoints == 0 ? 0 : (q.awardedPoints / q.maxPoints);
+    final pct = q.maxPoints == 0 ? 0.0 : (q.awardedPoints / q.maxPoints).toDouble();
     final isGood = pct >= 0.7;
 
     return Card(

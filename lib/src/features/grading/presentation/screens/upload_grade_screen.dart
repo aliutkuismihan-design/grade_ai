@@ -6,6 +6,7 @@ import 'package:grade_ai/src/core/theme/app_theme.dart';
 import 'package:grade_ai/src/features/grading/domain/entities/answer_key.dart';
 import 'package:grade_ai/src/features/grading/domain/entities/exam_paper.dart';
 import 'package:grade_ai/src/features/grading/domain/entities/rubric.dart';
+import 'package:grade_ai/src/features/grading/domain/entities/grading_result.dart';
 import 'package:grade_ai/src/features/grading/domain/services/grading_service.dart';
 import 'package:grade_ai/src/features/grading/application/providers.dart';
 import 'package:grade_ai/src/features/grading/presentation/widgets/grading_progress.dart';
@@ -59,7 +60,7 @@ class UploadGradeScreen extends ConsumerWidget {
       id: 'paper-${DateTime.now().millisecondsSinceEpoch}',
       studentName: 'Student',
       imagePaths: [image.path],
-      uploadedAt: DateTime.now(),
+      createdAt: DateTime.now(),
     );
 
     final answerKey = ref.read(_answerKeyProvider);
@@ -74,19 +75,19 @@ class UploadGradeScreen extends ConsumerWidget {
       language: language,
     );
 
-    result.when(
-      (gradingResult) {
-        ref.read(gradingStateProvider.notifier).state = AsyncValue.data(gradingResult);
-        if (context.mounted) {
-          context.push('/results');
-        }
-      },
+    result.fold(
       (failure) {
         ref.read(gradingStateProvider.notifier).state = AsyncValue.error(failure.message, StackTrace.current);
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Grading failed: ${failure.message}')),
           );
+        }
+      },
+      (gradingResult) {
+        ref.read(gradingStateProvider.notifier).state = AsyncValue.data(gradingResult);
+        if (context.mounted) {
+          context.push('/results');
         }
       },
     );
